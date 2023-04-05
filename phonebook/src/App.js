@@ -1,22 +1,29 @@
 import { useState } from 'react'
 
-const App = () => {
+const Filter = (props) => {
+
+  const handleFilterChange = (event) => {
+    props.setFilter(event.target.value)
+  }
+
+  return (
+    <div>
+        filter shown with <input value={props.filter} onChange={handleFilterChange}/>
+      </div>
+  )
+}
+
+const App = (props) => {
   const [persons, setPersons] = useState([
-    { name: 'Shirley Fang',
-      number: '000-000-000'},
-      { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Shirley Fang', number: '000-000-000'},
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
     { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ]) 
   const [newName, setNewName] = useState('Add Name...')
-  const [newNumber, setNewNumber] = useState('Add Number...')
+  const [newNumber, setNewNumber] = useState('Add Number...')  
   const [filter, setFilter] = useState('')
-  
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value)
-  }
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -33,7 +40,7 @@ const App = () => {
       number: newNumber
     }
     
-    if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase)){
+    if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase())){
       alert(`${newName} is already added to phonebook`)
       return
     }
@@ -42,17 +49,24 @@ const App = () => {
     setNewNumber('')
   }
 
-  var peopleToDisplay = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+  // const peopleLowerCase = persons.map(person => {
+  //   return {
+  //     ...person,
+  //     name: person.name.toLowerCase()
+  //   }
+  // })
+  
+  // var peopleToDisplay = peopleLowerCase.filter(person => person.name.includes(filter.toLowerCase()))
+  // This changes the original array to lower case.
 
+  var peopleToDisplay = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+  
   return (
     <div>
       <h2>Phonebook</h2>
-
-      <div>
-        filter shown with <input value={filter} onChange={handleFilterChange}/>
-      </div>
-      
+        <Filter filter={filter} setFilter={setFilter}/>
       <h2>add a new</h2>
+      
       <form onSubmit = {addPerson}>
         <div>
           name: <input value={newName} onChange = {handleNameChange}/>
@@ -66,8 +80,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {
-        peopleToDisplay.map((person, index) => (
+        {peopleToDisplay.map((person, index) => (
         <li key={index}>{person.name} {person.number} </li>
       ))}
       </ul>
