@@ -13,18 +13,7 @@ const Filter = (props) => {
   )
 }
 
-const App = (props) => {
-  const [persons, setPersons] = useState([
-    { name: 'Shirley Fang', number: '000-000-000'},
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ]) 
-  const [newName, setNewName] = useState('Add Name...')
-  const [newNumber, setNewNumber] = useState('Add Number...')  
-  const [filter, setFilter] = useState('')
-
+const AddPersons = ({newName, newNumber, setNewName, setNewNumber, persons, setPersons}) => {
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -49,25 +38,8 @@ const App = (props) => {
     setNewNumber('')
   }
 
-  // const peopleLowerCase = persons.map(person => {
-  //   return {
-  //     ...person,
-  //     name: person.name.toLowerCase()
-  //   }
-  // })
-  
-  // var peopleToDisplay = peopleLowerCase.filter(person => person.name.includes(filter.toLowerCase()))
-  // This changes the original array to lower case.
-
-  var peopleToDisplay = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
-  
   return (
-    <div>
-      <h2>Phonebook</h2>
-        <Filter filter={filter} setFilter={setFilter}/>
-      <h2>add a new</h2>
-      
-      <form onSubmit = {addPerson}>
+    <form onSubmit = {addPerson}>
         <div>
           name: <input value={newName} onChange = {handleNameChange}/>
         </div>
@@ -78,11 +50,49 @@ const App = (props) => {
           <button type="submit">add</button>
         </div>
       </form>
+  )
+}
+
+const Display = ({peopleToDisplay}) => (
+  <ul>
+  {peopleToDisplay.map((person, index) => (
+    <li key={index}>{person.name} {person.number} </li>
+  ))}
+  </ul>
+)
+
+const App = () => {
+  const [persons, setPersons] = useState([
+    { name: 'Shirley Fang', number: '000-000-000'},
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ]) 
+  const [newName, setNewName] = useState('Add Name...')
+  const [newNumber, setNewNumber] = useState('Add Number...')  
+  const [filter, setFilter] = useState('')
+
+  var peopleToDisplay = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+
+  // const peopleLowerCase = persons.map(person => {
+  //   return {
+  //     ...person,
+  //     name: person.name.toLowerCase()
+  //   }})
+  // var peopleToDisplay = peopleLowerCase.filter(person => person.name.includes(filter.toLowerCase()))
+  // This changes the original array to lower case.
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+        <Filter filter={filter} setFilter={setFilter}/>
+      <h2>add a new</h2>
+        <AddPersons newName={newName} newNumber={newNumber} 
+        setNewName={setNewName} setNewNumber={setNewNumber} persons={persons} setPersons={setPersons}/>
       <h2>Numbers</h2>
       <ul>
-        {peopleToDisplay.map((person, index) => (
-        <li key={index}>{person.name} {person.number} </li>
-      ))}
+        <Display peopleToDisplay = {peopleToDisplay} />
       </ul>
     </div>
   )
