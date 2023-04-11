@@ -3,15 +3,23 @@ import ReactDOM from 'react-dom/client'
 
 import App from './App'
 
+import axios from 'axios'
+
+const promise = axios.get('http://localhost:3001/notes')
+console.log(promise)
+
+const promise2 = axios.get('http://localhost:3001/foobar')
+console.log(promise2)
+
 const notes = [
   {
     id: 1,
-    content: 'HTML is easy',
+    content: 'HTML ir43efs easy',
     important: true
   },
   {
     id: 2,
-    content: 'Browser can execute only JavaScript',
+    content: 'Browser can refvfexecute only JavaScript',
     important: true
   },
   {
