@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import Note from'./Note.js'
 
+
+const Note = ({note, toggleImportance}) => {
+  const label = note.important
+   ? 'make not important' : 'make important'
+
+   return (
+    <li> {note.content}
+    <button onClick={toggleImportance}> {label}</button>
+    </li>
+   )
+}
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -10,6 +20,10 @@ const App = () => {
   )
   const [showAll, setShowAll] = useState(true)
 
+  const toggleImportanceOf = (id) => {
+    console.log('importance of ' + id + ' needs to be toggled')
+    console.log(id)
+  }
 
   const hook = () => {
     console.log('effect')
@@ -29,11 +43,14 @@ const App = () => {
     const noteObject = {
       content: newNote,
       important: Math.random() < 0.5,
-      id: notes.length + 1,
     }
 
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
+    axios.post('http://localhost:3001/notes', noteObject)
+    .then(response => {
+      setNotes(notes.concat(response.data))
+      setNewNote('')
+      console.log(response)
+    })
   }
 
   const handleNoteChange = (event) => {
@@ -55,7 +72,9 @@ const App = () => {
       </div>
       <ul>
         {notesToShow.map(note => 
-          <Note key={note.id} note={note}/>
+          <Note key={note.id} 
+          note={note}
+          toggleImportance={() => toggleImportanceOf(note.id)}/>
         )}
       </ul>
       <form onSubmit = {addNote}>
