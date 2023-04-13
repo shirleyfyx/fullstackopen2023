@@ -7,7 +7,7 @@ const Note = ({note, toggleImportance}) => {
    ? 'make not important' : 'make important'
 
    return (
-    <li> {note.content}
+    <li> {note.content} {}
     <button onClick={toggleImportance}> {label}</button>
     </li>
    )
@@ -20,9 +20,19 @@ const App = () => {
   )
   const [showAll, setShowAll] = useState(true)
 
-  const toggleImportanceOf = (id) => {
+  const toggleImportanceOf = id => {
+    const url = `http://localhost:3001/notes/${id}`
+    const note = notes.find(n => n.id === id)
+    const changeNote = {...note, important: !note.important }
+    // keeps everything the same except the importance of the notes.
+
+    axios.put(url, changeNote).then(response => {
+      setNotes(notes.map(n => n.id !== id ? n : response.data))
+    })
+    // it checks id the id of n is equal to id. It is it not equal, it returns 'n' unchanged,
+    // if equal, returns data property from the response. 
+    
     console.log('importance of ' + id + ' needs to be toggled')
-    console.log(id)
   }
 
   const hook = () => {
