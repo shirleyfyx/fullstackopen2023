@@ -22,6 +22,8 @@ const App = () => {
 
   const toggleImportanceOf = id => {
     const url = `http://localhost:3001/notes/${id}`
+    // make HTTP requests to the API endpoints
+
     const note = notes.find(n => n.id === id)
     const changeNote = {...note, important: !note.important }
     // keeps everything the same except the importance of the notes.
@@ -31,9 +33,10 @@ const App = () => {
     })
     // it checks id the id of n is equal to id. It is it not equal, it returns 'n' unchanged,
     // if equal, returns data property from the response. 
-    
+
     console.log('importance of ' + id + ' needs to be toggled')
   }
+  // making an HTTP request to the API endpoint for the note and replacing the old note object with the updated note object in the notes array
 
   const hook = () => {
     console.log('effect')
