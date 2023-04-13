@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import noteService from './notes'
 
 const Note = ({note, toggleImportance}) => {
   const label = note.important
@@ -20,35 +20,24 @@ const App = () => {
   )
   const [showAll, setShowAll] = useState(true)
 
-  const toggleImportanceOf = id => {
-    const url = `http://localhost:3001/notes/${id}`
-    // make HTTP requests to the API endpoints
-
-    const note = notes.find(n => n.id === id)
-    const changeNote = {...note, important: !note.important }
-    // keeps everything the same except the importance of the notes.
-
-    axios.put(url, changeNote).then(response => {
-      setNotes(notes.map(n => n.id !== id ? n : response.data))
-    })
-    // it checks id the id of n is equal to id. It is it not equal, it returns 'n' unchanged,
-    // if equal, returns data property from the response. 
-
-    console.log('importance of ' + id + ' needs to be toggled')
-  }
-  // making an HTTP request to the API endpoint for the note and replacing the old note object with the updated note object in the notes array
-
-  const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/notes')
+  useEffect(() => {
+    noteService
+      .getAll()
       .then(response => {
-        console.log('promise fulfilled')
         setNotes(response.data)
       })
-  }
+    }, [])
 
-  useEffect(hook, [])
+  const toggleImportanceOf = id => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+    .update(id, changedNote)
+    .then(response => {
+      setNotes(notes.map(note => note.id !== id ? note : response.data))
+    })
+  }
 
   const addNote = (event) => {
     event.preventDefault()
@@ -58,12 +47,12 @@ const App = () => {
       important: Math.random() < 0.5,
     }
 
-    axios.post('http://localhost:3001/notes', noteObject)
-    .then(response => {
-      setNotes(notes.concat(response.data))
-      setNewNote('')
-      console.log(response)
-    })
+    noteService
+      .create(noteObject)
+      .then(response => {
+        setNotes(notes.concat(response.data))
+        setNewNote('')
+      })
   }
 
   const handleNoteChange = (event) => {
