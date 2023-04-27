@@ -17,8 +17,15 @@ const update = (id, newObject) => {
     return request.then(response => response.data)
 }
 
-export default {
-    getAll: getAll,
-    create: create,
-    update: update
-}
+export default { getAll, create, update }
+
+
+// Error handler for reject promises: 
+// axios
+//   .get('http://example.com/probably_will_fail')
+//   .then(response => {
+//     console.log('success!')
+//   })
+//   .catch(error => {
+//     console.log('fail')
+//   })

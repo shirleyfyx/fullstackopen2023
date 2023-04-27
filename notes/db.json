@@ -3,7 +3,7 @@
     {
       "id": 1,
       "content": "HTML is easy",
-      "important": false
+      "important": true
     },
     {
       "id": 2,
@@ -44,6 +44,36 @@
       "content": "hello",
       "important": false,
       "id": 9
+    },
+    {
+      "content": "a new note...",
+      "important": false,
+      "id": 10
+    },
+    {
+      "content": "",
+      "important": false,
+      "id": 11
+    },
+    {
+      "content": "a new note...",
+      "important": false,
+      "id": 12
+    },
+    {
+      "content": "a new note...",
+      "important": false,
+      "id": 13
+    },
+    {
+      "content": "a new note...",
+      "important": true,
+      "id": 14
+    },
+    {
+      "content": "a new note...",
+      "important": false,
+      "id": 15
     }
   ]
 }
