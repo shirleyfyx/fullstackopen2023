@@ -35,8 +35,15 @@ const AddPersons = ({newName, newNumber, setNewName, setNewNumber, persons, setP
       return
     }
     setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    setNewName('Add Name...')
+    setNewNumber('Add Number...')
+
+    axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        console.log(response)
+      })
+
   }
 
   return (
