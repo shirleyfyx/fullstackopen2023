@@ -67,27 +67,6 @@ const AddPersons = ({newName, newNumber, setNewName, setNewNumber, persons, setP
   )
 }
 
-const toDelete = (id) => {
-  console.log('delete' + id)
-  axios.delete(`http://localhost:3001/persons/${id}`)
-    .then(response => {
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-const Display = ({peopleToDisplay}) => (
-  <ul>
-  {peopleToDisplay.map((person, index) => (
-    <li key={index}>
-      {person.name} {person.number} 
-      <button onClick={() => toDelete(person.id)}>  delete</button></li>
-  ))}
-  </ul>
-)
-
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('Add Name...')
@@ -128,10 +107,40 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         <Display peopleToDisplay = {peopleToDisplay} 
-        toDelete={() => toDelete(persons.id)}/>
+        toDelete={(id) => toDelete(persons.id)}/>
       </ul>
     </div>
   )
 }
+
+
+const Display = ({peopleToDisplay, setPersons, persons}) => (
+  <ul>
+  {peopleToDisplay.map((person, index) => (
+    <li key={index}>
+      {person.name} {person.number} 
+      <button
+      onClick={() => toDelete(person.id, setPersons, persons)}>  delete</button></li>
+  ))}
+  </ul>
+)
+
+
+const toDelete = (id, setPersons, persons) => {
+  const person = persons.find(n => n.id === id)
+
+  if (window.confirm("Delete" + person.name + "?")) {
+  console.log('delete' + id)
+  axios.delete(`http://localhost:3001/persons/${id}`)
+    .then(response => {
+      console.log(response.data)
+      setPersons(persons.map(person => person.id !== id))
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+}
+
 
 export default App
