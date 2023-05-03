@@ -67,10 +67,23 @@ const AddPersons = ({newName, newNumber, setNewName, setNewNumber, persons, setP
   )
 }
 
+const toDelete = (id) => {
+  console.log('delete' + id)
+  axios.delete(`http://localhost:3001/persons/${id}`)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
 const Display = ({peopleToDisplay}) => (
   <ul>
   {peopleToDisplay.map((person, index) => (
-    <li key={index}>{person.name} {person.number} </li>
+    <li key={index}>
+      {person.name} {person.number} 
+      <button onClick={() => toDelete(person.id)}>  delete</button></li>
   ))}
   </ul>
 )
@@ -114,7 +127,8 @@ const App = () => {
         setNewName={setNewName} setNewNumber={setNewNumber} persons={persons} setPersons={setPersons}/>
       <h2>Numbers</h2>
       <ul>
-        <Display peopleToDisplay = {peopleToDisplay} />
+        <Display peopleToDisplay = {peopleToDisplay} 
+        toDelete={() => toDelete(persons.id)}/>
       </ul>
     </div>
   )
