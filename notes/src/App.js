@@ -3,6 +3,21 @@ import noteService from './services'
 import Note from './Note'
 import './index.css'
 
+const Footer = () => {
+  const footerStyle = {
+    color: 'green',
+    fontStyle: 'italic',
+    fontSize: 16
+  }
+  return (
+    <div style={footerStyle}>
+      <br />
+      <em> Note app, Department of Engineering, University of Waterloo 2023</em>
+    </div>
+  )
+}
+// React Inline Styles
+
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState(
@@ -97,6 +112,7 @@ const App = () => {
         onChange = {handleNoteChange}/>
         <button type="submit"> save </button>
       </form>
+      <Footer />
     </div>
   )
 }
