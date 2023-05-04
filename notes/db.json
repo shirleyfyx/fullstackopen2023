@@ -3,7 +3,7 @@
     {
       "id": 1,
       "content": "HTML is easy",
-      "important": true
+      "important": false
     },
     {
       "id": 2,
@@ -17,63 +17,8 @@
     },
     {
       "content": "a new note...",
-      "important": false,
-      "id": 4
-    },
-    {
-      "content": "hh",
-      "important": false,
-      "id": 5
-    },
-    {
-      "content": "",
-      "important": false,
-      "id": 6
-    },
-    {
-      "content": "hh",
-      "important": false,
-      "id": 7
-    },
-    {
-      "content": "hh",
-      "important": false,
-      "id": 8
-    },
-    {
-      "content": "hello",
-      "important": false,
-      "id": 9
-    },
-    {
-      "content": "a new note...",
-      "important": false,
-      "id": 10
-    },
-    {
-      "content": "",
-      "important": false,
-      "id": 11
-    },
-    {
-      "content": "a new note...",
-      "important": false,
-      "id": 12
-    },
-    {
-      "content": "a new note...",
-      "important": false,
-      "id": 13
-    },
-    {
-      "content": "a new note...",
       "important": true,
-      "id": 14
-    },
-    {
-      "content": "a new note...",
-      "important": false,
-      "id": 15
+      "id": 4
     }
   ]
 }
