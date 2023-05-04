@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import noteService from './services'
 import Note from './Note'
+import './index.css'
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -8,6 +9,7 @@ const App = () => {
     'a new note...'
   )
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
 
   useEffect(() => {
     noteService
@@ -32,6 +34,18 @@ const App = () => {
         )
         setNotes(notes.filter(n => n.id !== id))
       })
+  }
+
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+
+    return (
+      <div className='error'>
+        {message}
+      </div>
+    )
   }
 
   const addNote = (event) => {
@@ -62,6 +76,7 @@ const App = () => {
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}
